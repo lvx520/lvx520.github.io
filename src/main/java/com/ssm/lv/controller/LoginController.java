@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Date;
 
 /**
  * @author lv
@@ -40,7 +39,7 @@ public class LoginController {
     public String logout(Model model,HttpServletRequest request){
         org.apache.shiro.subject.Subject subject=SecurityUtils.getSubject();
         subject.logout();
-        return "coustom/main";
+        return "coustom/index";
     }
     //登录成功
     @RequestMapping(value = "/Userlogin",method = RequestMethod.GET)
@@ -51,7 +50,7 @@ public class LoginController {
             subject.login(token);
             User user = (User) subject.getPrincipal();
             subject.getSession().setAttribute("user", user);
-            return "coustom/main";
+            return "coustom/index";
         } catch (UnknownAccountException e){
             e.printStackTrace();
             model.addAttribute("errorstr","用户名或密码错误!");

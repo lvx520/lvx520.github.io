@@ -1,13 +1,11 @@
 package com.ssm.lv.controller;
 
-import com.ssm.lv.entity.BigType;
 import com.ssm.lv.service.BigTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
 
 /**
  * @author lv
@@ -40,7 +38,7 @@ private BigTypeService bigTypeService;
             //读取教程类型
 //        List<BigType> bigTypeList=bigTypeService.listBigType();
 //        request.getSession().setAttribute("bigTypeList",bigTypeList);
-        return "coustom/main";
+        return "coustom/index";
     }
 
     //@RequestMapping("/coustom/showOnetitle")
