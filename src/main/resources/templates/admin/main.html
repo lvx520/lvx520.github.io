@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>简易网后台管理</title>
+    <link rel="stylesheet" href="/layui/css/layui.css"  media="all">
+    <script type="text/javascript" src="/layui/jquery-3.3.1.min.js"></script>
+    <script>
+        function change(title) {
+            var url="";
+            switch (title){
+                case 'adminBigType':
+                    url="/admin/bigType";
+                    break;
+                case 'adminSmallType':
+                    url='/admin/smallType';
+                    break;
+                case 'adminCourse':
+                    url='/admin/course';
+                    break;
+                case 'adminAddnote':
+                    url='/admin/addnote';
+                    break;
+                case 'adminUser':
+                    url='/admin/user';
+                    break;
+                case 'adminallnote':
+                    url='/admin/note';
+                    break;
+                case 'advertisLink':
+                    url='/admin/advertisLink';
+                    break;
+                //************************
+
+            }
+            $('iframe').attr('src',url);
+            if(title=="userMain"){
+                window.location.href="/skip/main2";
+            }
+        }
+    </script>
+</head>
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+    <div class="layui-header">
+        <div class="layui-logo">简易网后台管理</div>
+        <!-- 头部区域（可配合layui已有的水平导航） -->
+        <ul class="layui-nav layui-layout-left">
+            <!--<li class="layui-nav-item"><a href="">控制台</a></li>-->
+            <li class="layui-nav-item">
+                <a href="javascript:;">广告管理</a>
+                <dl class="layui-nav-child">
+                    <dd><a href="javascript:;" onclick="change('advertisLink')">网站广告</a></dd>
+                    <!--<dd><a href="javascript:;" onclick="change('imgPage')">用户头像</a></dd>-->
+                </dl>
+            </li>
+            <li class="layui-nav-item"><a href="javascript:;" onclick="change('adminUser')">用户</a></li>
+            <li class="layui-nav-item">
+                <a href="javascript:;">其它系统</a>
+                <dl class="layui-nav-child">
+                    <!--<dd><a href="javascript:;" onclick="change('userLink')">友链管理</a></dd>-->
+                    <dd><a href="javascript:;" onclick="change('userMain')">前台页面</a></dd>
+                </dl>
+            </li>
+        </ul>
+        <ul class="layui-nav layui-layout-right">
+            <li class="layui-nav-item">
+                <a href="javascript:;">
+                    <div>
+                        <img  src="/image/bb.jpg" class="layui-nav-img">
+                        <!--<span th:text="${blogger.bloggername}"></span>-->
+                    </div>
+                </a>
+                <!--<dl class="layui-nav-child">-->
+                    <!--<dd><a href="javascript:;" onclick="change('skipBlogger')">资料卡展示</a></dd>-->
+                    <!--<dd><a href="javascript:;" onclick="change('editBlogger')">编辑资料卡</a></dd>-->
+                <!--</dl>-->
+            </li>
+            <li class="layui-nav-item"><a href="">退了</a></li>
+        </ul>
+    </div>
+
+    <div class="layui-side layui-bg-black">
+        <div class="layui-side-scroll">
+            <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+            <ul class="layui-nav layui-nav-tree"  lay-filter="test">
+                <li class="layui-nav-item layui-nav-itemed">
+                    <a class="" href="javascript:;">类型管理</a>
+                    <dl class="layui-nav-child">
+                        <dd><a  href="javascript:;" onclick="change('adminBigType')">教程类型管理</a></dd>
+                        <dd><a href="javascript:;" onclick="change('adminSmallType')">教程名称类型</a></dd>
+                        </dl>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="javascript:;" onclick="change('adminCourse')">教程文章管理</a>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="javascript:;" onclick="change('adminallnote')">笔记管理</a>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="javascript:;" onclick="change('adminAddnote')">笔记添加管理</a>
+                </li>
+
+                <!--<li class="layui-nav-item"><a href="">云市场</a></li>-->
+                <!--<li class="layui-nav-item"><a href="">发布商品</a></l、i>-->
+            </ul>
+        </div>
+    </div>
+
+    <div class="layui-body">
+        <!-- 内容主体区域 -->
+        <div style="padding: 15px;">
+            <iframe src="/qq" frameborder="0" name="demoAdmin" id="demoAdmin" style="width: 100%; height:475px;"></iframe>
+            <!--<iframe src="/blog"></iframe>-->
+        </div>
+    </div>
+
+    <div class="layui-footer">
+        <!-- 底部固定区域 -->
+        © layui.com - 底部固定区域
+    </div>
+</div>
+<script src="/layui/layui.js" charset="utf-8"></script>
+<script>
+    //JavaScript代码区域
+    layui.use('element', function(){
+        var element = layui.element;
+
+    });
+</script>
+
+</body>
+</html>

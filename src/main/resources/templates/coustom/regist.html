@@ -1,0 +1,28 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <title>简易学习网</title>
+    <meta charset="utf-8">
+	<meta http-equiv="pragma" content="no-cache">
+	<meta http-equiv="cache-control" content="no-cache">
+	<meta http-equiv="expires" content="0">    
+	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+	<meta http-equiv="description" content="This is my page">
+<link rel="stylesheet" type="text/css" href="/css/css.css" />
+  </head>
+  <body>
+      	<form name="form1" action="" method="get">
+                 <h1>简易网注册</h1>
+            <input class=input_1 id=username size=15  name="username" placeholder=用户名><br />
+          	<input class=input_1 id=password type=text size=15 name="password" placeholder=密码><br />
+            <input class=input_1 id=confirmPassword type=text size=15 name="confirmPassword" placeholder=确认密码><br />
+          <br/>
+            <input class=input_3 type="button" onclick="login()" value="注册" />
+            <input class=input_3 type="button"  onclick=document.form1.reset() value="重置" />
+            <p style="color: red" th:text="${errorstr}" th:if="${not #strings.isEmpty(errorstr)}"></p>
+        </form>
+
+        <script type="text/javascript" src="/js/scriptRegist.js"></script>
+  </body>
+</html>

@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>管理教程类型页面</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <script src="/webjars/jquery/3.3.1/jquery.js"></script>
+    <link rel="stylesheet" href="/layui/css/layui.css"  media="all">
+    <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
+
+    <link rel="stylesheet" href="/webjars/bootstrap/3.3.7/css/bootstrap.css" />
+    <script src="/webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <style>
+        .layui-table img{
+            max-width: 50px;
+        }
+
+    </style>
+</head>
+<body>
+<!--修改广告类型-->
+<div class="modal fade" id="smallTypeUpdateModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog"  role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">广告修改</h4>
+            </div>
+
+            <div class="modal-body">
+                <!-- 表单-->
+                <form class="form-horizontal">
+                    <input type="hidden" name="id" id="bigtypeID"/>
+                    <div class="form-group">
+                        <label  class="col-sm-3 control-label">广告名称:</label>
+                        <div  class="col-sm-6">
+                            <input  type="text" name="typename" id="typename_update_input" class="form-control">
+                            <span class="help-block"></span>
+                        </div>
+
+                    </div>
+
+                    <div class="form-group">
+                        <label  class="col-sm-3 control-label">广告位置:</label>
+                        <div  class="col-sm-6">
+                            <input  type="text" name="summary" id="summary_update_input" class="form-control">
+                            <span class="help-block"></span>
+                        </div>
+
+                    </div>
+
+
+                </form>
+            </div>
+            <div style="text-align: right">
+                <button type="button" class="btn btn-default"   data-dismiss="modal">退出</button>
+                <button type="button" class="btn btn-primary"  id="smallType_update_btn">更新</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--添加广告教程-->
+<div class="modal fade" id="adverAddModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog"  role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">广告添加</h4>
+            </div>
+
+            <div class="modal-body">
+                <!-- 表单-->
+                <form class="form-horizontal">
+
+                    <div class="form-group">
+                        <label  class="col-sm-3 control-label">广告名称:</label>
+                        <div class="col-sm-6">
+                            <input type="text" name="advername" class="form-control" id="advername" placeholder="请输入广告投放者名字">
+                            <span class="help-block"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                    <label  class="col-sm-3 control-label">广告位置:</label>
+                    <div class="col-sm-6">
+                        <input type="text" name="position" class="form-control" id="position" placeholder="请输入广告位置">
+                        <span class="help-block"></span>
+                    </div>
+                    </div>
+
+                </form>
+            </div>
+            <div style="text-align: right">
+                <button type="button" class="btn btn-default"  id="type_reset_btn"data-dismiss="modal">退出</button>
+                <button type="button" class="btn btn-primary"  id="adver_save_btn">保存</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--图片添加imgAddModal-->
+<div class="modal fade" id="imgAddModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog"  role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">教程封面上传</h4>
+            </div>
+
+            <div class="modal-body">
+                <form action="/advertoImg" method="post"  enctype="multipart/form-data" >
+                    <input type="hidden" name="id" id="smalltypeID"/>
+                    <input type="file" name="face">
+                    <input type="submit" value="上传">
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+<table class="layui-hide"  id="test" lay-filter="test"></table>
+
+<script type="text/html" id="toolbarDemo">
+    <div class="layui-btn-container">
+        <button class="layui-btn layui-btn-sm" lay-event="getCheckData">获取选中行数据</button>
+        <button class="layui-btn layui-btn-sm" lay-event="getCheckLength">获取选中数目</button>
+        <button class="layui-btn layui-btn-sm" lay-event="isAll">验证是否全选</button>
+        <button class="layui-btn layui-btn-sm" lay-event="deleteAll" id="deleteAll">批量删除</button>
+        <button class="layui-btn layui-btn-sm" lay-event="addType" id="addType">添加</button>
+        <button class="layui-btn layui-btn-sm" lay-event="relax" id="relax">刷新</button>
+    </div>
+</script>
+<script type="text/html" id="barDemo">
+    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+   <a class="layui-btn layui-btn-xs" lay-event="btn_img">上传</a>
+</script>
+
+
+<script src="/layui/layui.js" charset="utf-8"></script>
+<!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
+
+<script>
+    layui.use('table', function(){
+        var table = layui.table;
+
+        //温馨提示：默认由前端自动合计当前行数据。从 layui 2.5.6 开始： 若接口直接返回了合计行数据，则优先读取接口合计行数据。
+        //详见：https://www.layui.com/doc/modules/table.html#totalRow
+      var tableIns= table.render({
+            elem: '#test'
+            ,url:'/admin/adverList'
+            ,toolbar: '#toolbarDemo'
+            ,title: '广告类型数据表'
+            ,totalRow: true
+            ,cols: [
+                [
+                {type: 'checkbox', fixed: 'left'}
+                ,{field:'id', title:'ID', width:120, fixed: 'left', unresize: true, sort: true, totalRowText: '合计'}
+                ,{field:'advername', title:'广告名称', width:120}
+                ,{field:'imgurl', title:'封面名称', width:100}
+                ,{field:'position', title:'网页位置', width:100}
+                 ,{field:'imgShow', title:'图片预览',templet:function (d) {
+                        return '<img src='+d.imgShow+'>';
+                    }, width:120}
+                ,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:200}
+            ]
+            ]
+            ,page: true
+        });
+
+        //监听工具条
+        table.on('tool(test)', function(obj){
+            var data = obj.data;
+            if(obj.event === 'del'){
+                layer.confirm('真的删除行么', function(index){
+                    $.ajax({
+                        url: "/admin/adverDelByAllorId",
+                        type: "POST",
+                        data: {str: data.id+"-"},
+                        success: function (result) {
+                            if (result.code ==100) {
+                                //删除这一行
+                                obj.del();
+                                //关闭弹框
+                                layer.close(index);
+                                layer.msg("删除成功", {icon: 6});
+                            } else {
+                                layer.msg("删除失败", {icon: 5});
+                            }
+                        }
+                    });
+                });
+            } else if(obj.event === 'edit'){
+                    //清除表单数据(完整：表单数据，样式)
+                    reset_form("#smallTypeUpdateModal form");
+                //先赋值
+                $("#typename_update_input").val(data.typename);
+                 $("#summary_update_input").val(data.summary);
+
+                     $("#bigtypeID").val(data.id);
+                     //弹出模态框
+                    $("#smallTypeUpdateModal").modal({
+                        backdrop:"static"
+                    });
+                //更新教程类型信息
+                $("#smallType_update_btn").unbind('click').bind('click',function (obj) {
+                    //再取值
+
+                    var advername = $("#typename_update_input").val();
+                    var position = $("#summary_update_input").val();
+                    if (advername=="") {
+                        layer.msg("广告名称不能为空", {icon: 5});
+                    }  else if (position == "") {
+                        layer.msg("广告位置不能为空", {icon: 5});
+                    }
+
+                    $.ajax({
+                        url:"/admin/updateadver",
+                        type:"post",
+                        data:{'id':data.id,'advername': advername,'position':position},
+                        success:function(result){
+                            if(result.code==100){
+                                $('.layui-laypage-btn')[0].click();
+                                //更新成功，关闭模态框
+                                $("#smallTypeUpdateModal").modal('hide');
+                                layer.msg("更新成功", {icon: 6});
+                                //同步更新表格和缓存对应的值
+                                obj.update({
+                                    advername:advername,
+                                    position:position,
+                                });
+                            }else{
+                                //更新失败，关闭模态框
+                                $("#bigTypeUpdateModal").modal('hide');
+                                layer.msg("更新失败", {icon: 5});
+                            }
+
+                        }
+                    })
+                })
+            }else if(obj.event === 'btn_img'){
+
+                //清除表单数据(完整：表单数据，样式)
+                reset_form("#imgAddModal form");
+                //弹出模态框
+                $("#imgAddModal").modal({
+                    backdrop:"static"
+                });
+                $("#smalltypeID").val(data.id);
+            }
+        });
+
+        function reset_form(ele){
+            $(ele)[0].reset();
+            //清空表单样式
+            $(ele).find("*").removeClass("has-success has-error");
+            $(ele).find(".help-block").text("");
+        }
+        //工具栏事件
+        table.on('toolbar(test)', function(obj){
+            var checkStatus = table.checkStatus(obj.config.id);
+            switch(obj.event){
+                case 'getCheckData':
+                    var data = checkStatus.data;
+                    layer.alert(JSON.stringify(data));
+                    break;
+                case 'getCheckLength':
+                    var data = checkStatus.data;
+                    layer.msg('选中了：'+ data.length + ' 个');
+                    break;
+                case 'isAll':
+                    layer.msg(checkStatus.isAll ? '全选': '未全选')
+                    break;
+                case 'relax':
+                    location.reload();
+                    break;
+                case 'addType':
+                    //清除表单数据(完整：表单数据，样式)
+                    reset_form("#adverAddModal form");
+                    //弹出模态框
+                    $("#adverAddModal").modal({
+                        backdrop:"static"
+                    });
+                    $("#adver_save_btn").unbind('click').bind('click',function (index){
+                         var advername = $("#advername").val();
+                        var position = $("#position").val();
+
+                        if (advername=="") {
+                            layer.msg("广告名称不能为空", {icon: 5});
+                        }else if (position == "") {
+                            layer.msg("广告位置不能为空", {icon: 5});
+                        }
+
+                            $.ajax({
+                            url:"/admin/addadver",
+                            type:"POST",
+                            data:{'advername': advername,'position':position},
+                            success:function(result) {
+                                if (result.code == 100) {
+                                    //博客类型保存成功，关闭模态框
+                                    $("#adverAddModal").modal('hide');
+                                    layer.msg("添加成功", {icon: 6});
+
+                                     tableIns.reload();
+
+                                    layer.close(index);
+                                    location.reload();
+                                } else{
+                                    layer.msg("添加失败", {icon: 5});
+                                }
+                            }
+                        });
+
+                    })
+
+                    break;
+                case 'deleteAll':
+                    var data = checkStatus.data;
+                    var  str='';
+                    if(data.length!=0){
+                        for(var i=0;i<data.length;i++){
+                            str+=data[i].id+"-";
+                        }
+                        layer.confirm('真的删除选中的行么', function (index) {
+                            $.ajax({
+                                url: "/admin/smallTypeDelByAllorId",
+                                type: "POST",
+                                data: {str: str},
+                                success: function (result) {
+                                    if (result.code ==100) {
+                                        layer.msg("删除成功", {icon: 6});
+                                        tableIns.reload();
+                                        layer.close(index);
+
+                                    } else {
+                                        layer.msg("删除失败", {icon: 5});
+                                    }
+                                }
+                            });
+                        });
+                    }else {
+                        layer.msg("未选择数据", {icon: 5});
+                    }
+                    break;
+            };
+        });
+    });
+</script>
+
+</body>
+</html>

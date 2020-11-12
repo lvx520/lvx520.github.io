@@ -1,0 +1,18 @@
+package com.ssm.lv.config;
+
+import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+/**
+ * @author lv
+ * @date 2020/8/17 - 16:38
+ */
+@Configuration
+public class MybatisPlusConfig {
+    @Bean
+    public PaginationInterceptor paginationInterceptor(){
+        return new PaginationInterceptor();
+    }
+
+}

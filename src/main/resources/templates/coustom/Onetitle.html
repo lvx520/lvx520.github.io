@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:shiro="http://www.thymeleaf.org/thymeleaf-extras-shiro">
+<head>
+    <meta charset="UTF-8">
+    <title>简易学习网</title>
+    <link rel="stylesheet" href="/layui/css/layui.css"  media="all">
+    <script src="/webjars/jquery/3.3.1/jquery.js"></script>
+    <!--<link rel="stylesheet" href="/webjars/bootstrap/3.3.7/css/bootstrap.css" />-->
+    <!--<script src="/webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>-->
+    <link href="/font-awesome/css/font-awesome.css" rel="stylesheet">
+    <!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
+    <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
+    <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="/css/coustom/test.css" />
+    <link rel="stylesheet" type="text/css" href="/css/coustom/allCoustom.css" />
+    <link rel="stylesheet" type="text/css" href="/css/bodyDiv.css" />
+    <!--<link rel="stylesheet" href="style.css">-->
+
+</head>
+<body style="background-color: whitesmoke;">
+<div class="container">
+
+    <div class="zj1">
+        <!--我浮动在上面-->
+        <img id="title_img" src="/favicon.ico">
+        <span id="title"><h4>简易学习网</h4></span>
+        <div id="title_page7" th:if="${session.user!=null}">
+            <div shiro:hasPermission="admin">
+                <span><h3><a id="back-stage" href="/admin/main">后台</a></h3></span>
+            </div>
+        </div>
+        <div id="title_page6"  th:if="${session.user!=null}">
+            <span th:text="${session.user.username}"></span>
+            <span><a href="/logout">退出</a></span>
+        </div>
+        <div id="title_page5" th:if="${session.user==null}">
+            <span><h3><a href="/skip/login">登录/注册</a></h3></span>
+        </div>
+        <div class="search bar4" >
+            <form action="/coustom/mainSousuo" method="get">
+                <input type="text" name="sousuoFont" id="sousuoText" placeholder="请输入您要搜索的内容...">
+                <button type="submit" id="sousuoFrom"></button>
+            </form>
+        </div>
+        <span id="title_page4"><a href="/skip/ourJianYi">关于我们</a></span>
+
+        <!--<span id="title_page3">简易博文</span>-->
+        <span id="title_page2"><a href="/skip/note">简易笔记</a></span>
+        <span id="title_page1"><a href="/skip/main2">首页</a></span>
+    </div>
+    <div id="div_body">
+        <div class="layui-row" >
+            <div  class="layui-col-xs2"id="div_body_left2" style="background-color: white;">
+                <p  id="div_body_left_header2" th:text="${typename}"></p>
+                <hr style="width: 80%">
+                <div id="div_body_left_boder2" style="float: left;margin-left: 10px;margin-right: 10px">
+
+                </div>
+            </div>
+            <div  class="layui-col-xs7" style="float:left;margin-left:10px;">
+                <div >
+                    <div style="float: left;margin-top: 30px;background-color: white">
+                        <div style="width:650px;float: left;margin-top: 30px;margin-left: 30px;margin-right: 30px" class="course_content">
+                            <div style="width:630px;text-align: left" th:utext="${course.content}"></div><br>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+            <div  class="2" id="div_body_left" style="float:left;margin-left: 40px;background-color: white;">
+                    <!--<p  id="div_body_left_header">教程推荐</p>-->
+                    <!--<hr>-->
+                    <div id="div_body_left_boder" style="float: left;margin-left: 10px;margin-right: 10px">
+
+                    </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div style="float: left;margin-top: 20px;margin-left: 50px;width: 100%">
+        <div class="layui-row">
+            <div  class="layui-col-xs3">
+                <!--<div class="layui-col-xs3">-->
+                <!--<img id="title_img2" src="/favicon.ico">-->
+                <!--</div>-->
+                <div class="layui-col-xs5" style="float:right;margin-right: 50px">
+                    <div>
+                        <p style="float: right;margin-right: 10px;font-size: 22px;margin-top: 20px">简易学习网</p>
+                    </div>
+                    <div>
+                        <p style="float: right;margin-right: 10px;font-size: 22px;margin-top: 10px">JianYi.cn</p>
+                    </div>
+                </div>
+                <div style="float:right">
+                    <span id="title3" style="margin-bottom: 10px">本站初心是与大家一起学习一起进</br>步，勇敢学习，为梦想而战！</span>
+                    <br><br>
+                </div>
+            </div>
+            <div  class="layui-col-xs2" style="width:220px;margin-left: 50px">
+
+                <ul style="float: left;margin-top: 30px">
+                    <li style="float:left;margin-left: 20px;margin-top: 20px"><a  href="">联系方式</a></li>
+                    <li style="float:left;margin-left: 20px;margin-top: 5px"><a  href="">QQ邮箱:2135261459@qq.com</a></li>
+                    <li style="float:left;margin-left: 20px;margin-top: 5px"> <a  href="">163邮箱:lvx5202020@163.com</a></li>
+                </ul>
+            </div>
+            <div  class="layui-col-xs2" style="width:200px;margin-left: 50px;">
+                <ul style="float: left;margin-left: 10px;margin-top: 15px">
+                    <li style="float:left;margin-top: 20px">友情链接</li><br>
+                    <li style="float:left;margin-top: 5px"><a  href="">菜鸟教程</a></li><br>
+                    <li style="float:left;margin-top: 5px"> <a  href="">Layui官网</a></li><br>
+                    <li style="float:left;margin-top: 5px"><a  href="">Bootstrap官网</a></li>
+                </ul>
+            </div>
+            <div  class="layui-col-xs3" style="float:left;margin-left: 20px">
+                <img src="../image/weixin.jpg" style="width: 120px;float: left;margin-left: 10px;margin-top: 30px">
+                <img src="../image/qq.jpg" style="width: 120px;float: left;margin-left: 10px;margin-top: 30px">
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script src="/layui/layui.js" charset="utf-8"></script>
+<script type="text/javascript" src="/js/test.js"></script>
+<script type="text/javascript" src="/js/coumain.js"></script>
+<!-- 全屏图标 -->
+<script>
+    //右边根据类型查询所有教程
+    $(document).on("click",".click_skip_page2",function(){
+        var type=$(this).attr("select-type");
+        window.location.href="/coustom/showOneType?type="+type;
+    });
+    //左边根据文章标题查询文章
+    $(document).on("click",".click_skip_page",function(){
+        var title=$(this).attr("select-title");
+        var typename=$("#div_body_left_header2").text();
+        window.location.href="/coustom/showOneCourseByTitle?title="+title+"&typename="+typename;
+    });
+    //右边教程类型
+    $(function () {
+        //  查询右边所有教程
+        all__bigType();
+        //左边教程具体章节
+        var typena=$("#div_body_left_header2").text();
+        all_course(typena)
+    })
+    //左边教程
+    function all_course(typena){
+        $.ajax({
+            url: "/coustomer/selectAllCourse",
+            type: "get",
+            data:{'typena':typena},
+            success: function (result) {
+                bulid_all_Course(result);
+            }
+        })
+    }
+    function bulid_all_Course(result) {
+        //清空之前的数据
+        $("#div_body_left_boder2").empty();
+        var courses = result.extend.courseList;
+        $.each(courses, function (index, item) {
+            var type_i=$("<i class='left_i'></i>").append(item.title)
+            var typename = $("<p class='click_skip_page'></p>")
+                .append(type_i);
+            //自定义属性
+            typename.attr('select-title', item.title);
+            $("<div></div>")
+                .append(typename)
+                .append("<hr >")
+                .appendTo("#div_body_left_boder2");
+
+        })
+    }
+    //右边教程
+    function all__bigType(){
+        $.ajax({
+            url: "/coustomer/selectAllBigType",
+            type: "get",
+            success: function (result) {
+                bulid_all__bigType(result);
+            }
+        })
+    }
+    function bulid_all__bigType(result) {
+        //清空之前的数据
+        $("#div_body_left_boder").empty();
+        var bigTypes = result.extend.bigTypeList;
+        $.each(bigTypes, function (index, item) {
+            var type_i=$("<i class='left_i'></i>").append(item.type)
+            var typename = $("<p class='click_skip_page2'><i class='fa fa-external-link'></i></p>")
+                .append(type_i);
+            //自定义属性
+            typename.attr('select-type', item.type);
+            $("<div></div>")
+                .append(typename)
+                .append("<hr >")
+                .appendTo("#div_body_left_boder")
+        })
+    }
+
+
+</script>
+
+</html>

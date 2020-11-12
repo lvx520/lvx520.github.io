@@ -1,0 +1,33 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <title>简易学习网</title>
+    <meta charset="utf-8">
+	<meta http-equiv="pragma" content="no-cache">
+	<meta http-equiv="cache-control" content="no-cache">
+	<meta http-equiv="expires" content="0">    
+	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+	<meta http-equiv="description" content="This is my page">
+<link rel="stylesheet" type="text/css" href="/css/css.css" />
+
+  </head>
+  <body>
+      	<form name="form1" action="" method="get" >
+                 <h1>简易网登录</h1>
+            <input class=input_1 id=username type="text" size=15  name="username"  placeholder=用户名><br />
+            <input class=input_1 id=password type=text size=15 name="password" placeholder=密码><br />
+            <span><font color="red" id="error1"></font></span>
+            <span><font color="red" id="error2"></font></span>
+  	 		<br/>
+            <input class=input_3 type="button" onclick="login()"  value="登录" />
+            <input class=input_3 type="onclick=document.form1.reset()"   value="重置" />
+            <!--//onclick=document.form1.reset()-->
+            <a href="/regist">没有账号？去注册</a>
+            <p style="color: red" th:text="${errorstr}" th:if="${not #strings.isEmpty(errorstr)}"></p>
+
+        </form>
+
+        <script type="text/javascript" src="/js/script.js"></script>
+  </body>
+</html>
